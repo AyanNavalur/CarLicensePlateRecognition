@@ -33,6 +33,9 @@ public class RecognitionService {
             System.out.println("Detected labels for the given photo");
             for (Label label : labels) {
                 System.out.println(label.name() + ": " + label.confidence().toString());
+                if (label.confidence() > 90 && label.name().equals("Car")) {
+                    return true;
+                }
             }
 
         } catch (RekognitionException e) {
@@ -40,6 +43,6 @@ public class RecognitionService {
             System.exit(1);
         }
         // for now
-        return true;
+        return false;
     }
 }

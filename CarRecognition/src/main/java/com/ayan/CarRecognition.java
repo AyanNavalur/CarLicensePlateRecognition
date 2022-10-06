@@ -92,6 +92,15 @@ public class CarRecognition {
                 QueueService.pushMessages(sqsClient, msg);
             }
         }
+        // sending -1 to indicate end of messages
+        MessageData msg = new MessageData();
+        // UUID uuid = UUID.randomUUID();
+        // String msgId = uuid.toString();
+        msg.setName("-1");
+        msg.setId(UUID.randomUUID().toString());
+        msg.setBody("End of messages");
+        QueueService.pushMessages(sqsClient, msg);
+
         s3.close();
         rekClient.close();
         sqsClient.close();
