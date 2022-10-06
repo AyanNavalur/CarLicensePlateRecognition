@@ -12,14 +12,9 @@ import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 import software.amazon.awssdk.services.sqs.model.SqsException;
 
 public class QueueService {
-    public static List<String> getMessages(String queueName) {
+    public static List<String> getMessages(SqsClient sqsClient, String queueName) {
 
         List<String> indexes = new ArrayList<>();
-
-        SqsClient sqsClient = SqsClient.builder()
-                .region(Region.US_WEST_2)
-                .credentialsProvider(ProfileCredentialsProvider.create())
-                .build();
 
         try {
             GetQueueUrlRequest getQueueRequest = GetQueueUrlRequest.builder()

@@ -10,6 +10,7 @@ import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.rekognition.RekognitionClient;
+import software.amazon.awssdk.services.sqs.SqsClient;
 
 public class TextRecognition {
 
@@ -31,10 +32,16 @@ public class TextRecognition {
                 .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
                 // .credentialsProvider(ProfileCredentialsProvider.create())
                 .build();
+
+        SqsClient sqsClient = SqsClient.builder()
+                .region(Region.US_EAST_1)
+                .credentialsProvider(ProfileCredentialsProvider.create())
+                .build();
+
         boolean flag = true;
 
         while (true) {
-            List<String> indexes = QueueService.getMessages("ayan.fifo");
+            List<String> indexes = QueueService.getMessages(sqsClient, "ayan.fifo");
             if (indexes.isEmpty()) {
                 System.out.println("No messages in the queue");
                 continue;
@@ -53,5 +60,6 @@ public class TextRecognition {
             }
         }
         rekClient.close();
+        sqsClient.close();
     }
 }
