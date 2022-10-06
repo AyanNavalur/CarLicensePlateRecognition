@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.rekognition.model.S3Object;
 import software.amazon.awssdk.services.rekognition.model.TextDetection;
 
 public class RecognitionService {
-    public static void detectTextLabels(RekognitionClient rekClient, String bucket, String image) {
+    public static String detectTextLabels(RekognitionClient rekClient, String bucket, String image) {
 
         try {
             S3Object s3Object = S3Object.builder()
@@ -43,5 +43,6 @@ public class RecognitionService {
             System.out.println(e.getMessage());
             System.exit(1);
         }
+        return "Done";
     }
 }

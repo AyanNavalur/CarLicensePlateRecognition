@@ -26,7 +26,7 @@ public class QueueService {
                     .queueUrl(queueUrl)
                     .maxNumberOfMessages(10)
                     .waitTimeSeconds(20)
-                    .messageAttributeNames(attr) // "Name"
+                    .messageAttributeNames("Name")
                     .build();
 
             List<Message> messages = sqsClient.receiveMessage(receiveRequest).messages();
@@ -35,15 +35,14 @@ public class QueueService {
 
             // Push the messages to a list.
             for (Message m : messages) {
-                // myMessage = new MessageData();
-                // myMessage.setBody(m.body());
-                // myMessage.setId(m.messageId());
+                myMessage = new MessageData();
+                myMessage.setBody(m.body());
+                myMessage.setId(m.messageId());
 
-                // Map<String, MessageAttributeValue> map = m.messageAttributes();
-                // MessageAttributeValue val = map.get("Name");
-                // myMessage.setName(val.stringValue());
-                // allMessages.add(myMessage);
-                indexes.add(m.body());
+                Map<String, MessageAttributeValue> map = m.messageAttributes();
+                MessageAttributeValue val = map.get("Name");
+                myMessage.setName(val.stringValue());
+                indexes.add(myMessage.getName());
             }
 
         } catch (SqsException e) {
