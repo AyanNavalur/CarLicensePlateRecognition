@@ -5,10 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.ayan</groupId>
-  <artifactId>demo</artifactId>
+  <artifactId>TextRecognition</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
-  <name>demo</name>
+  <name>TextRecognition</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -99,6 +100,29 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+              <configuration>
+                <archive>
+                  <manifest>
+                    <mainClass>com.ayan.TextRecognition</mainClass>
+                  </manifest>
+                </archive>
+                <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
       </plugins>
     </pluginManagement>
   </build>

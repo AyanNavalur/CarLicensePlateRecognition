@@ -38,11 +38,16 @@ public class RecognitionService {
                 System.out.println("Type: " + text.type());
                 System.out.println();
             }
+            try {
+                return textCollection.get(0).detectedText();
+            } catch (Exception e) {
+                return null;
+            }
 
         } catch (RekognitionException e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
-        return "Done";
+        return null;
     }
 }

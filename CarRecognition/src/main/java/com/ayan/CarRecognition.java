@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+// import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+// import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.rekognition.RekognitionClient;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -33,10 +33,10 @@ public class CarRecognition {
             List<S3Object> objects = res.contents();
             System.out.println(objects.size());
             for (S3Object myValue : objects) {
-                System.out.print("\n The name of the key is " + myValue.key());
+                // System.out.print("\n The name of the key is " + myValue.key());
                 objectKeyList.add(myValue.key());
-                System.out.print("\n The object is " + calKb(myValue.size()) + " KBs");
-                System.out.print("\n The owner is " + myValue.owner());
+                // System.out.print("\n The object is " + calKb(myValue.size()) + " KBs");
+                // System.out.print("\n The owner is " + myValue.owner());
             }
 
         } catch (S3Exception e) {
@@ -47,21 +47,21 @@ public class CarRecognition {
     }
 
     // convert bytes to kbs.
-    private static long calKb(Long val) {
-        return val / 1024;
-    }
+    // private static long calKb(Long val) {
+    // return val / 1024;
+    // }
 
     public static void main(String[] args) {
         // temp usage of credentials. delete later. figure out how to use
         // ProfileCredentialsProvider class
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(
-                "your_access_key_id",
-                "your_secret_access_key");
+        // AwsBasicCredentials awsCreds = AwsBasicCredentials.create(
+        // "ASIAZ7VNOJL7C75PHM42",
+        // "9NFOV0RUkZBkNtCK14KC5DEgRBvAY/TgonHM3o0h");
 
         S3Client s3 = S3Client.builder()
                 .region(CarRecognition.region)
-                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-                // .credentialsProvider(ProfileCredentialsProvider.create())
+                // .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                .credentialsProvider(ProfileCredentialsProvider.create())
                 .build();
         System.out.println("Listing objects");
         List<String> objectKeyList = listBucketObjects(s3, CarRecognition.bucket);
@@ -70,17 +70,18 @@ public class CarRecognition {
         RekognitionClient rekClient = RekognitionClient.builder()
                 .region(CarRecognition.region)
                 // temp
-                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-                // .credentialsProvider(ProfileCredentialsProvider.create())
+                // .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                .credentialsProvider(ProfileCredentialsProvider.create())
                 .build();
 
         SqsClient sqsClient = SqsClient.builder()
                 .region(CarRecognition.region)
-                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-                // .credentialsProvider(ProfileCredentialsProvider.create())
+                // .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                .credentialsProvider(ProfileCredentialsProvider.create())
                 .build();
 
         for (String key : objectKeyList) {
+            System.out.println("key: " + key);
             if (RecognitionService.getLabelsfromImage(rekClient, CarRecognition.bucket, key)) {
                 System.out.println("Car detected in the image");
                 MessageData msg = new MessageData();

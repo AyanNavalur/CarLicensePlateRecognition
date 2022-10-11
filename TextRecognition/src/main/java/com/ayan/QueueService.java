@@ -2,12 +2,15 @@ package com.ayan;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.model.DeleteMessageRequest;
 import software.amazon.awssdk.services.sqs.model.GetQueueUrlRequest;
 import software.amazon.awssdk.services.sqs.model.Message;
+import software.amazon.awssdk.services.sqs.model.MessageAttributeValue;
 import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 import software.amazon.awssdk.services.sqs.model.SqsException;
 
@@ -35,7 +38,7 @@ public class QueueService {
 
             // Push the messages to a list.
             for (Message m : messages) {
-                myMessage = new MessageData();
+                MessageData myMessage = new MessageData();
                 myMessage.setBody(m.body());
                 myMessage.setId(m.messageId());
 
@@ -43,6 +46,12 @@ public class QueueService {
                 MessageAttributeValue val = map.get("Name");
                 myMessage.setName(val.stringValue());
                 indexes.add(myMessage.getName());
+
+                DeleteMessageRequest deleteMessageRequest = DeleteMessageRequest.builder()
+                        .queueUrl(queueUrl)
+                        .receiptHandle(m.receiptHandle())
+                        .build();
+                sqsClient.deleteMessage(deleteMessageRequest);
             }
 
         } catch (SqsException e) {

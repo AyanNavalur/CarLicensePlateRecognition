@@ -1,0 +1,8 @@
+target/
+.settings
+.classpath
+.project
+.vscode
+.idea
+*.txt
+*.jpg

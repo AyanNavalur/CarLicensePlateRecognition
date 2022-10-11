@@ -34,6 +34,8 @@ $ java -version
 
 --Accessing Credentials for Java SDK
 
+<!-- fill this -->
+
 --Copying Credentials to EC2 instances
 Create property file
 $mkdir .aws
