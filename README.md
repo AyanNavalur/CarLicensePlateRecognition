@@ -33,14 +33,14 @@ After installation check using the below command to confirm Java is installed
 $ java -version
 
 --Accessing Credentials for Java SDK
-
-<!-- fill this -->
+After starting you AWS Student Learner Lab, click on "AWS Details" and then click on AWS CLI to get the access key, secret key and session token which is to be stored in the credentials file
+\*\*Note: Accessing credentials is different for normal AWS accounts.
 
 --Copying Credentials to EC2 instances
-Create property file
+Create credentials file
 $mkdir .aws
 $touch .aws/credentials
-Vim and copy credentials to property file
+Vim and copy credentials to credentials file
 $vi .aws/credentials
 \*\*Note: Crendentials change after a session expires. You would need to copy the new credentials again.
 
@@ -54,11 +54,13 @@ Leave the other configurations to default and click on "Create Queue"
 --Creating jar files
 Clone the repository into your local machine
 git clone https://github.com/AyanNavalur/CarTextRecognition.git
-% create jar files
+Create executable jar files for Car and Text recognition projects using Eclipse export option
 
 --Deploying jar files to EC2 instances
 You can copy the files using FTP command or FTP clients like WinSCP
 Place both the jar files in the respective EC2 instances
-% run command
+Run the jar files
+$ java -jar jar_file.jar
+Output will be stored in a text file on the Text Recognition EC2 instance in output.txt file
 
 \*\*Note: All above instructions are for Windows OS. Few intructions might change for Linux/Mac systems.

@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.rekognition.RekognitionClient;
 import software.amazon.awssdk.services.sqs.SqsClient;
@@ -23,6 +21,8 @@ public class TextRecognition {
         PrintWriter printWriter = new PrintWriter(fileWriter);
         printWriter.print("\nIndex: " + index + ", Text: " + text);
         printWriter.close();
+        fileWriter.close();
+        System.out.println("Wrote for index: " + index);
     }
 
     public static void main(String[] args) throws IOException {

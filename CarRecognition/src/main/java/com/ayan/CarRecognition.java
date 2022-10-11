@@ -55,8 +55,8 @@ public class CarRecognition {
         // temp usage of credentials. delete later. figure out how to use
         // ProfileCredentialsProvider class
         // AwsBasicCredentials awsCreds = AwsBasicCredentials.create(
-        // "ASIAZ7VNOJL7C75PHM42",
-        // "9NFOV0RUkZBkNtCK14KC5DEgRBvAY/TgonHM3o0h");
+        // "your_access_key_id",
+        // "your_secret_access_key");
 
         S3Client s3 = S3Client.builder()
                 .region(CarRecognition.region)
