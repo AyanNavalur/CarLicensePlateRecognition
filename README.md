@@ -1,6 +1,5 @@
 # CarTextRecognition
 
-CS 643-851
 Author - Ayan Navalur
 
 AWS project to build an image recognition pipeline in AWS, using two EC2 instances, S3, SQS, and Rekognition.
